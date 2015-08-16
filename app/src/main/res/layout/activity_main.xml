@@ -32,7 +32,6 @@
                     android:id="@+id/main.imageview.placeholder"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/image_margin"
-                    android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
                     android:src="@drawable/quila2"
                     android:tint="#11000000"
