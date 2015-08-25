@@ -116,6 +116,7 @@
 			android:background="@color/primary"
 			app:layout_anchor="@id/main.framelayout.title"
 			app:theme="@style/ThemeOverlay.AppCompat.Dark"
+			app:title=""
 			>
 
 			<LinearLayout

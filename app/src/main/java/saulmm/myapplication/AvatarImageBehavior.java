@@ -45,15 +45,11 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
         return dependency instanceof Toolbar;
     }
 
-    int mStartYPosition = 0;
-
-    int mFinalYPosition = 0;
-
-    int finalHeight = 130;
-
-    int mStartHeight = 0;
-
-    int mFinalXPosition = 0;
+    private int mStartYPosition = 0;
+    private int mFinalYPosition = 0;
+    private int finalHeight = 0;
+    private int mStartHeight = 0;
+    private int mFinalXPosition = 0;
 
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, CircleImageView child, View dependency) {

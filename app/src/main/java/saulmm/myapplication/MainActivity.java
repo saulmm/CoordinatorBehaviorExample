@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity
 
         bindActivity();
 
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         startAlphaAnimation(mTitle, 0, View.INVISIBLE);
         mAppBarLayout.addOnOffsetChangedListener(this);
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity
         mAppBarLayout   = (AppBarLayout) findViewById(R.id.main_appbar);
         mImageparallax  = (ImageView) findViewById(R.id.main_imageview_placeholder);
         mFrameParallax  = (FrameLayout) findViewById(R.id.main_framelayout_title);
+
     }
 
     private void initParallaxValues() {

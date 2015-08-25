@@ -8,7 +8,7 @@
     <!-- dimensions -->
     <dimen name="image_width">120dp</dimen>
     <dimen name="image_margin">300dp</dimen>
-    <dimen name="image_final_width">56dp</dimen>
+    <dimen name="image_final_width">48dp</dimen>
 
     <!-- styles -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -17,7 +17,7 @@
     </style>
 
     <!-- strings -->
-    <string name="app_name"></string>
+    <string name="app_name">Coordinator example</string>
     <string name="quila_name">Quila</string>
     <string name="quila_tagline">I love bones and slippers</string>
     <string name="quila_name2">Quila!</string>
