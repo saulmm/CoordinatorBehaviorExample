@@ -21,6 +21,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
 
     private float mFinalLeftAvatarPadding;
     private float mStartPosition;
+    private int mStartXPosition;
 
     public AvatarImageBehavior(Context context, AttributeSet attrs) {
         mContext = context;
@@ -44,45 +45,57 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
         return dependency instanceof Toolbar;
     }
 
-    // Child startPosition
-    int startPosition = 0;
+    int mStartYPosition = 0;
 
-    // Toolbar half position
-    int finalPosition = 0;
+    int mFinalYPosition = 0;
 
     int finalHeight = 130;
 
-    int startHeight = 0;
+    int mStartHeight = 0;
+
+    int mFinalXPosition = 0;
 
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, CircleImageView child, View dependency) {
 
         // Called once
-        if (startPosition == 0)
-            startPosition = (int) (child.getY() + (child.getHeight() / 2));
+        if (mStartYPosition == 0)
+            mStartYPosition = (int) (child.getY() + (child.getHeight() / 2));
 
-        if (finalPosition == 0)
-            finalPosition = (dependency.getHeight() /2);
+        if (mFinalYPosition == 0)
+            mFinalYPosition = (dependency.getHeight() /2);
 
-        if (startHeight == 0)
-            startHeight = child.getHeight();
+        if (mStartHeight == 0)
+            mStartHeight = child.getHeight();
 
+        if (finalHeight == 0)
+            finalHeight = mContext.getResources().getDimensionPixelOffset(R.dimen.image_final_width);
 
-        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
+        if (mStartXPosition == 0)
+            mStartXPosition = (int) (child.getX() + (child.getWidth() / 2));
+
+        if (mFinalXPosition == 0)
+            mFinalXPosition = mContext.getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_content_inset_material) + (finalHeight / 2);
 
         final int maxScrollDistance = (int) (mMarginTop - getStatusBarHeight());
         float expandedPercentageFactor = dependency.getY() / maxScrollDistance;
 
-        float distanceYToSubtract = ((startPosition - finalPosition) * (1f - expandedPercentageFactor)) + (child.getHeight()/2);
-        float heightToSubtract = ((startHeight - finalHeight) * (1f - expandedPercentageFactor));
+        float distanceYToSubtract = ((mStartYPosition - mFinalYPosition)
+            * (1f - expandedPercentageFactor)) + (child.getHeight()/2);
 
-        child.setY(startPosition - distanceYToSubtract);
+        float distanceXToSubtract = ((mStartXPosition - mFinalXPosition)
+            * (1f - expandedPercentageFactor)) + (child.getWidth()/2);
+
+        float heightToSubtract = ((mStartHeight - finalHeight) * (1f - expandedPercentageFactor));
+
+        child.setY(mStartYPosition - distanceYToSubtract);
+        child.setX(mStartXPosition - distanceXToSubtract);
 
         int proportionalAvatarSize = (int) (mAvatarMaxSize * (expandedPercentageFactor));
 
-        lp.width = (int) (startHeight - heightToSubtract);
-        lp.height = (int) (startHeight - heightToSubtract);
-
+        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
+        lp.width = (int) (mStartHeight - heightToSubtract);
+        lp.height = (int) (mStartHeight - heightToSubtract);
         child.setLayoutParams(lp);
         return true;
     }

@@ -8,6 +8,7 @@
     <!-- dimensions -->
     <dimen name="image_width">120dp</dimen>
     <dimen name="image_margin">300dp</dimen>
+    <dimen name="image_final_width">56dp</dimen>
 
     <!-- styles -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
