@@ -44,12 +44,15 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
         return dependency instanceof Toolbar;
     }
 
-
     // Child startPosition
     int startPosition = 0;
 
     // Toolbar half position
     int finalPosition = 0;
+
+    int finalHeight = 130;
+
+    int startHeight = 0;
 
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, CircleImageView child, View dependency) {
@@ -61,25 +64,24 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
         if (finalPosition == 0)
             finalPosition = (dependency.getHeight() /2);
 
+        if (startHeight == 0)
+            startHeight = child.getHeight();
+
+
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
 
-        final int maxNumber = (int) (mMarginTop - getStatusBarHeight());
+        final int maxScrollDistance = (int) (mMarginTop - getStatusBarHeight());
+        float expandedPercentageFactor = dependency.getY() / maxScrollDistance;
 
-        // Assume that the final position will be at the top
-        final int topPosition = 0;
+        float distanceYToSubtract = ((startPosition - finalPosition) * (1f - expandedPercentageFactor)) + (child.getHeight()/2);
+        float heightToSubtract = ((startHeight - finalHeight) * (1f - expandedPercentageFactor));
 
-        float currentPositionY = child.getY() + child.getHeight()/2;
-        float expandedPercentageFactor = dependency.getY() / maxNumber;
+        child.setY(startPosition - distanceYToSubtract);
 
+        int proportionalAvatarSize = (int) (mAvatarMaxSize * (expandedPercentageFactor));
 
-        child.setY(startPosition - (((startPosition - finalPosition) * (1f - expandedPercentageFactor)) + (child.getHeight()/2)));
-        int proportionalAvatarSize = (int) (mAvatarMaxSize * (expandedPercentageFactor));//
-//
-        if (expandedPercentageFactor >= MIN_AVATAR_PERCENTAGE_SIZE) {
-            lp.width = proportionalAvatarSize;
-            lp.height = proportionalAvatarSize;
-        }
-
+        lp.width = (int) (startHeight - heightToSubtract);
+        lp.height = (int) (startHeight - heightToSubtract);
 
         child.setLayoutParams(lp);
         return true;
