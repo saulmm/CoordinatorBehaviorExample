@@ -19,57 +19,67 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
     private float mAvatarMaxSize;
     private float mMarginTop;
 
+    private float mFinalLeftAvatarPadding;
+    private float mStartPosition;
+
     public AvatarImageBehavior(Context context, AttributeSet attrs) {
         mContext = context;
         init();
+
+        mFinalLeftAvatarPadding = context.getResources().getDimension(
+            R.dimen.abc_action_bar_navigation_padding_start_material);
     }
 
     private void init() {
+        bindDimensions();
+    }
+
+    private void bindDimensions() {
         mAvatarMaxSize = mContext.getResources().getDimension(R.dimen.image_width);
         mMarginTop = mContext.getResources().getDimension(R.dimen.image_margin);
     }
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, CircleImageView child, View dependency) {
-
         return dependency instanceof Toolbar;
     }
 
-    @Override
-    public boolean onMeasureChild(CoordinatorLayout parent, CircleImageView child,
-                                  int parentWidthMeasureSpec, int widthUsed, int parentHeightMeasureSpec, int heightUsed) {
 
-        return super.onMeasureChild(parent, child, parentWidthMeasureSpec, widthUsed,
-                parentHeightMeasureSpec, heightUsed);
-    }
+    // Child startPosition
+    int startPosition = 0;
+
+    // Toolbar half position
+    int finalPosition = 0;
 
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, CircleImageView child, View dependency) {
+
+        // Called once
+        if (startPosition == 0)
+            startPosition = (int) (child.getY() + (child.getHeight() / 2));
+
+        if (finalPosition == 0)
+            finalPosition = (dependency.getHeight() /2);
 
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
 
         final int maxNumber = (int) (mMarginTop - getStatusBarHeight());
 
-        float percentageFactor = dependency.getY() / maxNumber;
-        int proportionalAvatarSize = (int) (mAvatarMaxSize * (percentageFactor));
+        // Assume that the final position will be at the top
+        final int topPosition = 0;
 
-        float childMarginTop    = dependency.getY() - (child.getHeight() / 2);
-        float childMarginLeft   = (dependency.getWidth() / 2) - (child.getWidth() / 2);
-        float pChildMarginLeft  = childMarginLeft * percentageFactor;
+        float currentPositionY = child.getY() + child.getHeight()/2;
+        float expandedPercentageFactor = dependency.getY() / maxNumber;
 
-        int extraFinalPadding = (int) (EXTRA_FINAL_AVATAR_PADDING * (1f - percentageFactor));
 
-        if (percentageFactor >= MIN_AVATAR_PERCENTAGE_SIZE) {
+        child.setY(startPosition - (((startPosition - finalPosition) * (1f - expandedPercentageFactor)) + (child.getHeight()/2)));
+        int proportionalAvatarSize = (int) (mAvatarMaxSize * (expandedPercentageFactor));//
+//
+        if (expandedPercentageFactor >= MIN_AVATAR_PERCENTAGE_SIZE) {
             lp.width = proportionalAvatarSize;
             lp.height = proportionalAvatarSize;
         }
 
-        lp.setMargins(
-            (int) pChildMarginLeft + extraFinalPadding,
-            (int) childMarginTop + extraFinalPadding,
-            lp.rightMargin,
-            lp.bottomMargin
-        );
 
         child.setLayoutParams(lp);
         return true;
