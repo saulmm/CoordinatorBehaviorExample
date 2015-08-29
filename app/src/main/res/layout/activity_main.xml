@@ -94,7 +94,7 @@
 				android:layout_height="wrap_content"
 				android:layout_margin="8dp"
 				app:cardElevation="8dp"
-				app:contentPadding="8dp"
+				app:contentPadding="16dp"
 				>
 
 				<TextView
@@ -126,9 +126,8 @@
 				>
 
 				<Space
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					style="@style/Base.Widget.AppCompat.Toolbar.Button.Navigation"
+					android:layout_width="@dimen/image_final_width"
+					android:layout_height="@dimen/image_final_width"
 					/>
 
 				<TextView
@@ -136,6 +135,7 @@
 					android:layout_width="wrap_content"
 					android:layout_height="match_parent"
 					android:gravity="center_vertical"
+					android:layout_marginLeft="8dp"
 					android:text="@string/quila_name2"
 					android:textColor="@android:color/white"
 					android:textSize="20sp"

@@ -17,11 +17,11 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
     private final static String TAG = "behavior";
     private final Context mContext;
     private float mAvatarMaxSize;
-    private float mMarginTop;
 
     private float mFinalLeftAvatarPadding;
     private float mStartPosition;
     private int mStartXPosition;
+    private float mStartToolbarPosition;
 
     public AvatarImageBehavior(Context context, AttributeSet attrs) {
         mContext = context;
@@ -37,19 +37,18 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
 
     private void bindDimensions() {
         mAvatarMaxSize = mContext.getResources().getDimension(R.dimen.image_width);
-        mMarginTop = mContext.getResources().getDimension(R.dimen.image_margin);
     }
 
+    private int mStartYPosition;
+
+    private int mFinalYPosition;
+    private int finalHeight;
+    private int mStartHeight;
+    private int mFinalXPosition;
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, CircleImageView child, View dependency) {
         return dependency instanceof Toolbar;
     }
-
-    private int mStartYPosition = 0;
-    private int mFinalYPosition = 0;
-    private int finalHeight = 0;
-    private int mStartHeight = 0;
-    private int mFinalXPosition = 0;
 
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, CircleImageView child, View dependency) {
@@ -73,7 +72,10 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
         if (mFinalXPosition == 0)
             mFinalXPosition = mContext.getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_content_inset_material) + (finalHeight / 2);
 
-        final int maxScrollDistance = (int) (mMarginTop - getStatusBarHeight());
+        if (mStartToolbarPosition == 0)
+            mStartToolbarPosition = dependency.getY() + (dependency.getHeight()/2);
+
+        final int maxScrollDistance = (int) (mStartToolbarPosition - getStatusBarHeight());
         float expandedPercentageFactor = dependency.getY() / maxScrollDistance;
 
         float distanceYToSubtract = ((mStartYPosition - mFinalYPosition)
