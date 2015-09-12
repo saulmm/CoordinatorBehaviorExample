@@ -33,32 +33,29 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         bindActivity();
 
         mToolbar.setTitle("");
+        mAppBarLayout.addOnOffsetChangedListener(this);
+
         setSupportActionBar(mToolbar);
         startAlphaAnimation(mTitle, 0, View.INVISIBLE);
-        mAppBarLayout.addOnOffsetChangedListener(this);
         initParallaxValues();
     }
 
     private void bindActivity() {
-
         mToolbar        = (Toolbar) findViewById(R.id.main_toolbar);
         mTitle          = (TextView) findViewById(R.id.main_textview_title);
         mTitleContainer = (LinearLayout) findViewById(R.id.main_linearlayout_title);
         mAppBarLayout   = (AppBarLayout) findViewById(R.id.main_appbar);
         mImageparallax  = (ImageView) findViewById(R.id.main_imageview_placeholder);
         mFrameParallax  = (FrameLayout) findViewById(R.id.main_framelayout_title);
-
     }
 
     private void initParallaxValues() {
-
         CollapsingToolbarLayout.LayoutParams petDetailsLp =
             (CollapsingToolbarLayout.LayoutParams) mImageparallax.getLayoutParams();
 
@@ -74,24 +71,20 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int offset) {
-
         int maxScroll = appBarLayout.getTotalScrollRange();
         float percentage = (float) Math.abs(offset) / (float) maxScroll;
 
         handleAlphaOnTitle(percentage);
         handleToolbarTitleVisibility(percentage);
-
     }
 
     private void handleToolbarTitleVisibility(float percentage) {
-
             if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
 
                 if(!mIsTheTitleVisible) {
@@ -109,9 +102,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void handleAlphaOnTitle(float percentage) {
-
         if (percentage >= PERCENTAGE_TO_HIDE_TITLE_DETAILS) {
-
             if(mIsTheTitleContainerVisible) {
                 startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
                 mIsTheTitleContainerVisible = false;
@@ -127,7 +118,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public static void startAlphaAnimation (View v, long duration, int visibility) {
-
         AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
             ? new AlphaAnimation(0f, 1f)
             : new AlphaAnimation(1f, 0f);
