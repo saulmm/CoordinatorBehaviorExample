@@ -52,28 +52,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
 
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, CircleImageView child, View dependency) {
-
-        // Called once
-        if (mStartYPosition == 0)
-            mStartYPosition = (int) (child.getY() + (child.getHeight() / 2));
-
-        if (mFinalYPosition == 0)
-            mFinalYPosition = (dependency.getHeight() /2);
-
-        if (mStartHeight == 0)
-            mStartHeight = child.getHeight();
-
-        if (finalHeight == 0)
-            finalHeight = mContext.getResources().getDimensionPixelOffset(R.dimen.image_final_width);
-
-        if (mStartXPosition == 0)
-            mStartXPosition = (int) (child.getX() + (child.getWidth() / 2));
-
-        if (mFinalXPosition == 0)
-            mFinalXPosition = mContext.getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_content_inset_material) + (finalHeight / 2);
-
-        if (mStartToolbarPosition == 0)
-            mStartToolbarPosition = dependency.getY() + (dependency.getHeight()/2);
+        shouldInitProperties(child, dependency);
 
         final int maxScrollDistance = (int) (mStartToolbarPosition - getStatusBarHeight());
         float expandedPercentageFactor = dependency.getY() / maxScrollDistance;
@@ -96,6 +75,29 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
         lp.height = (int) (mStartHeight - heightToSubtract);
         child.setLayoutParams(lp);
         return true;
+    }
+
+    private void shouldInitProperties(CircleImageView child, View dependency) {
+        if (mStartYPosition == 0)
+            mStartYPosition = (int) (child.getY() + (child.getHeight() / 2));
+
+        if (mFinalYPosition == 0)
+            mFinalYPosition = (dependency.getHeight() /2);
+
+        if (mStartHeight == 0)
+            mStartHeight = child.getHeight();
+
+        if (finalHeight == 0)
+            finalHeight = mContext.getResources().getDimensionPixelOffset(R.dimen.image_final_width);
+
+        if (mStartXPosition == 0)
+            mStartXPosition = (int) (child.getX() + (child.getWidth() / 2));
+
+        if (mFinalXPosition == 0)
+            mFinalXPosition = mContext.getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_content_inset_material) + (finalHeight / 2);
+
+        if (mStartToolbarPosition == 0)
+            mStartToolbarPosition = dependency.getY() + (dependency.getHeight()/2);
     }
 
     public int getStatusBarHeight() {
