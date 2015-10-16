@@ -25,7 +25,7 @@
 				android:id="@+id/main.collapsing"
 				android:layout_width="match_parent"
 				android:layout_height="450dp"
-				app:layout_scrollFlags="scroll|exitUntilCollapsed"
+				app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
 				>
 
 				<ImageView

@@ -28,7 +28,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
         init();
 
         mFinalLeftAvatarPadding = context.getResources().getDimension(
-            R.dimen.abc_action_bar_navigation_padding_start_material);
+            R.dimen.spacing_normal);
     }
 
     private void init() {
