@@ -27,6 +27,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
     private int finalHeight;
     private int mStartHeight;
     private int mFinalXPosition;
+
     public AvatarImageBehavior(Context context, AttributeSet attrs) {
         mContext = context;
         init();
