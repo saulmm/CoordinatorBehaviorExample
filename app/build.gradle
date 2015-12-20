@@ -21,8 +21,8 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.1.0"'
-    compile "com.android.support:design:23.1.0"
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:design:23.1.0'
+    compile 'com.android.support:cardview-v7:23.1.0'
     compile 'de.hdodenhof:circleimageview:1.3.0'
-    compile 'com.android.support:cardview-v7:22.2.1'
 }
