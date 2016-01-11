@@ -36,6 +36,7 @@
 					android:src="@drawable/quila2"
 					android:tint="#11000000"
 					app:layout_collapseMode="parallax"
+					app:layout_collapseParallaxMultiplier="0.9"
 					/>
 	
 				<FrameLayout
@@ -46,6 +47,8 @@
 					android:background="@color/primary"
 					android:orientation="vertical"
 					app:layout_collapseMode="parallax"
+					app:layout_collapseParallaxMultiplier="0.3"
+
 					>
 	
 					<LinearLayout

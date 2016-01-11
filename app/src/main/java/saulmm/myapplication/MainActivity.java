@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity
     private LinearLayout mTitleContainer;
     private TextView mTitle;
     private AppBarLayout mAppBarLayout;
-    private ImageView mImageparallax;
-    private FrameLayout mFrameParallax;
     private Toolbar mToolbar;
 
 
@@ -43,7 +41,6 @@ public class MainActivity extends AppCompatActivity
 
         setSupportActionBar(mToolbar);
         startAlphaAnimation(mTitle, 0, View.INVISIBLE);
-        initParallaxValues();
     }
 
     private void bindActivity() {
@@ -51,22 +48,6 @@ public class MainActivity extends AppCompatActivity
         mTitle          = (TextView) findViewById(R.id.main_textview_title);
         mTitleContainer = (LinearLayout) findViewById(R.id.main_linearlayout_title);
         mAppBarLayout   = (AppBarLayout) findViewById(R.id.main_appbar);
-        mImageparallax  = (ImageView) findViewById(R.id.main_imageview_placeholder);
-        mFrameParallax  = (FrameLayout) findViewById(R.id.main_framelayout_title);
-    }
-
-    private void initParallaxValues() {
-        CollapsingToolbarLayout.LayoutParams petDetailsLp =
-            (CollapsingToolbarLayout.LayoutParams) mImageparallax.getLayoutParams();
-
-        CollapsingToolbarLayout.LayoutParams petBackgroundLp =
-            (CollapsingToolbarLayout.LayoutParams) mFrameParallax.getLayoutParams();
-
-        petDetailsLp.setParallaxMultiplier(0.9f);
-        petBackgroundLp.setParallaxMultiplier(0.3f);
-
-        mImageparallax.setLayoutParams(petDetailsLp);
-        mFrameParallax.setLayoutParams(petBackgroundLp);
     }
 
     @Override
