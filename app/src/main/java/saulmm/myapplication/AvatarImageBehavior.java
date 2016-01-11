@@ -79,7 +79,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
 
     private void shouldInitProperties(CircleImageView child, View dependency) {
         if (mStartYPosition == 0)
-            mStartYPosition = (int) (child.getY() + (child.getHeight() / 2));
+            mStartYPosition = (int) (dependency.getY());
 
         if (mFinalYPosition == 0)
             mFinalYPosition = (dependency.getHeight() /2);

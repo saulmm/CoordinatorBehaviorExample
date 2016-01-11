@@ -24,7 +24,7 @@
 			<android.support.design.widget.CollapsingToolbarLayout
 				android:id="@+id/main.collapsing"
 				android:layout_width="match_parent"
-				android:layout_height="450dp"
+				android:layout_height="wrap_content"
 				app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
 				>
 
@@ -37,17 +37,17 @@
 					android:tint="#11000000"
 					app:layout_collapseMode="parallax"
 					/>
-
+	
 				<FrameLayout
 					android:id="@+id/main.framelayout.title"
 					android:layout_width="match_parent"
-					android:layout_height="150dp"
+					android:layout_height="100dp"
 					android:layout_gravity="bottom|center_horizontal"
 					android:background="@color/primary"
 					android:orientation="vertical"
 					app:layout_collapseMode="parallax"
 					>
-
+	
 					<LinearLayout
 						android:id="@+id/main.linearlayout.title"
 						android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
 						android:layout_gravity="center"
 						android:orientation="vertical"
 						>
-
+	
 						<TextView
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
 							android:textColor="@android:color/white"
 							android:textSize="30sp"
 							/>
-
+	
 						<TextView
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
 							android:text="@string/quila_tagline"
 							android:textColor="@android:color/white"
 							/>
-
+	
 					</LinearLayout>
 				</FrameLayout>
 			</android.support.design.widget.CollapsingToolbarLayout>
