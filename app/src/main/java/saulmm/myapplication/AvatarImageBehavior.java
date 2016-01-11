@@ -52,7 +52,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
 
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, CircleImageView child, View dependency) {
-        shouldInitProperties(child, dependency);
+        maybeInitProperties(child, dependency);
 
         final int maxScrollDistance = (int) (mStartToolbarPosition - getStatusBarHeight());
         float expandedPercentageFactor = dependency.getY() / maxScrollDistance;
@@ -77,7 +77,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
         return true;
     }
 
-    private void shouldInitProperties(CircleImageView child, View dependency) {
+    private void maybeInitProperties(CircleImageView child, View dependency) {
         if (mStartYPosition == 0)
             mStartYPosition = (int) (dependency.getY());
 
