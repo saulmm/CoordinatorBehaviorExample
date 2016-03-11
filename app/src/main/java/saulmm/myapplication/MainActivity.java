@@ -36,10 +36,9 @@ public class MainActivity extends AppCompatActivity
 
         bindActivity();
 
-        mToolbar.setTitle("");
         mAppBarLayout.addOnOffsetChangedListener(this);
 
-        setSupportActionBar(mToolbar);
+        mToolbar.inflateMenu(R.menu.menu_main);
         startAlphaAnimation(mTitle, 0, View.INVISIBLE);
     }
 
