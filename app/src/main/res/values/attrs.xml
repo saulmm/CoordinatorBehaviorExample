@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="AvatarImageBehavior">
-        <attr name="startYPosition" format="dimension"/>
         <attr name="finalYPosition" format="dimension"/>
         <attr name="startXPosition" format="dimension"/>
         <attr name="startToolbarPosition" format="dimension"/>

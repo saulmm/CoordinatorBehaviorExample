@@ -150,11 +150,16 @@
 		<de.hdodenhof.circleimageview.CircleImageView
 			android:layout_width="@dimen/image_width"
 			android:layout_height="@dimen/image_width"
-			android:layout_gravity="center"
 			android:src="@drawable/quila"
+			android:layout_gravity="center_horizontal"
 			app:border_color="@android:color/white"
 			app:border_width="2dp"
 			app:layout_behavior="saulmm.myapplication.AvatarImageBehavior"
+			app:finalYPosition="2dp"
+			app:finalHeight="@dimen/image_final_width"
+			app:startToolbarPosition="2dp"
+			app:startHeight="2dp"
+			app:startXPosition="2dp"
 			/>
 
 	</android.support.design.widget.CoordinatorLayout>

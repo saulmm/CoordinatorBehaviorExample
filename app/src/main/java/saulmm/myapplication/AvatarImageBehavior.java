@@ -1,6 +1,7 @@
 package saulmm.myapplication;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
@@ -15,16 +16,38 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
     private final static int EXTRA_FINAL_AVATAR_PADDING     = 80;
 
     private final static String TAG = "behavior";
-    private final Context mContext;
-    private float mAvatarMaxSize;
+    private Context mContext;
 
+    private float mCustomFinalYPosition;
+    private float mCustomStartXPosition;
+    private float mCustomStartToolbarPosition;
+    private float mCustomStartHeight;
+    private float mCustomFinalHeight;
+
+    private float mAvatarMaxSize;
     private float mFinalLeftAvatarPadding;
     private float mStartPosition;
     private int mStartXPosition;
     private float mStartToolbarPosition;
+    private int mStartYPosition;
+    private int mFinalYPosition;
+    private int mStartHeight;
+    private int mFinalXPosition;
 
     public AvatarImageBehavior(Context context, AttributeSet attrs) {
         mContext = context;
+
+        if (attrs != null) {
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AvatarImageBehavior);
+            mCustomFinalYPosition = a.getDimension(R.styleable.AvatarImageBehavior_finalYPosition, 0);
+            mCustomStartXPosition = a.getDimension(R.styleable.AvatarImageBehavior_startXPosition, 0);
+            mCustomStartToolbarPosition = a.getDimension(R.styleable.AvatarImageBehavior_startToolbarPosition, 0);
+            mCustomStartHeight = a.getDimension(R.styleable.AvatarImageBehavior_startHeight, 0);
+            mCustomFinalHeight = a.getDimension(R.styleable.AvatarImageBehavior_finalHeight, 0);
+
+            a.recycle();
+        }
+
         init();
 
         mFinalLeftAvatarPadding = context.getResources().getDimension(
@@ -39,12 +62,6 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
         mAvatarMaxSize = mContext.getResources().getDimension(R.dimen.image_width);
     }
 
-    private int mStartYPosition;
-
-    private int mFinalYPosition;
-    private int finalHeight;
-    private int mStartHeight;
-    private int mFinalXPosition;
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, CircleImageView child, View dependency) {
         return dependency instanceof Toolbar;
@@ -63,7 +80,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
         float distanceXToSubtract = ((mStartXPosition - mFinalXPosition)
             * (1f - expandedPercentageFactor)) + (child.getWidth()/2);
 
-        float heightToSubtract = ((mStartHeight - finalHeight) * (1f - expandedPercentageFactor));
+        float heightToSubtract = ((mStartHeight - mCustomFinalHeight) * (1f - expandedPercentageFactor));
 
         child.setY(mStartYPosition - distanceYToSubtract);
         child.setX(mStartXPosition - distanceXToSubtract);
@@ -87,14 +104,11 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
         if (mStartHeight == 0)
             mStartHeight = child.getHeight();
 
-        if (finalHeight == 0)
-            finalHeight = mContext.getResources().getDimensionPixelOffset(R.dimen.image_final_width);
-
         if (mStartXPosition == 0)
             mStartXPosition = (int) (child.getX() + (child.getWidth() / 2));
 
         if (mFinalXPosition == 0)
-            mFinalXPosition = mContext.getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_content_inset_material) + (finalHeight / 2);
+            mFinalXPosition = mContext.getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_content_inset_material) + ((int) mCustomFinalHeight / 2);
 
         if (mStartToolbarPosition == 0)
             mStartToolbarPosition = dependency.getY() + (dependency.getHeight()/2);
