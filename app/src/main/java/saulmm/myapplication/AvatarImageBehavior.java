@@ -33,6 +33,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
     private int mFinalYPosition;
     private int mStartHeight;
     private int mFinalXPosition;
+    private float mChangeBehaviorPoint;
 
     public AvatarImageBehavior(Context context, AttributeSet attrs) {
         mContext = context;
@@ -74,23 +75,35 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
         final int maxScrollDistance = (int) (mStartToolbarPosition);
         float expandedPercentageFactor = dependency.getY() / maxScrollDistance;
 
-        float distanceYToSubtract = ((mStartYPosition - mFinalYPosition)
-            * (1f - expandedPercentageFactor)) + (child.getHeight()/2);
+        if (expandedPercentageFactor < mChangeBehaviorPoint) {
+            float heightFactor = (mChangeBehaviorPoint - expandedPercentageFactor) / mChangeBehaviorPoint;
 
-        float distanceXToSubtract = ((mStartXPosition - mFinalXPosition)
-            * (1f - expandedPercentageFactor)) + (child.getWidth()/2);
+            float distanceXToSubtract = ((mStartXPosition - mFinalXPosition)
+                    * heightFactor) + (child.getHeight()/2);
+            float distanceYToSubtract = ((mStartYPosition - mFinalYPosition)
+                    * (1f - expandedPercentageFactor)) + (child.getHeight()/2);
 
-        float heightToSubtract = ((mStartHeight - mCustomFinalHeight) * (1f - expandedPercentageFactor));
+            child.setX(mStartXPosition - distanceXToSubtract);
+            child.setY(mStartYPosition - distanceYToSubtract);
 
-        child.setY(mStartYPosition - distanceYToSubtract);
-        child.setX(mStartXPosition - distanceXToSubtract);
+            float heightToSubtract = ((mStartHeight - mCustomFinalHeight) * heightFactor);
 
-        int proportionalAvatarSize = (int) (mAvatarMaxSize * (expandedPercentageFactor));
+            CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
+            lp.width = (int) (mStartHeight - heightToSubtract);
+            lp.height = (int) (mStartHeight - heightToSubtract);
+            child.setLayoutParams(lp);
+        } else {
+            float distanceYToSubtract = ((mStartYPosition - mFinalYPosition)
+                    * (1f - expandedPercentageFactor)) + (mStartHeight/2);
 
-        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
-        lp.width = (int) (mStartHeight - heightToSubtract);
-        lp.height = (int) (mStartHeight - heightToSubtract);
-        child.setLayoutParams(lp);
+            child.setX(mStartXPosition - child.getWidth()/2);
+            child.setY(mStartYPosition - distanceYToSubtract);
+
+            CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
+            lp.width = (int) (mStartHeight);
+            lp.height = (int) (mStartHeight);
+            child.setLayoutParams(lp);
+        }
         return true;
     }
 
@@ -112,6 +125,10 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
 
         if (mStartToolbarPosition == 0)
             mStartToolbarPosition = dependency.getY();
+
+        if (mChangeBehaviorPoint == 0) {
+            mChangeBehaviorPoint = (child.getHeight() - mCustomFinalHeight) / (2f * (mStartYPosition - mFinalYPosition));
+        }
     }
 
     public int getStatusBarHeight() {
