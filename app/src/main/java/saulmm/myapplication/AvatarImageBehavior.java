@@ -85,7 +85,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
 
             child.setX(mStartXPosition - distanceXToSubtract);
             
-            int maxYDistance = (mStartYPosition - mFinalYPosition) + (mCustomFinalHeight / 2);
+            float maxYDistance = (mStartYPosition - mFinalYPosition) + (mCustomFinalHeight / 2);
             if (distanceYToSubtract > maxYDistance)
                 distanceYToSubtract = maxYDistance;
             
